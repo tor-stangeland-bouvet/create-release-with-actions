@@ -1,0 +1,15 @@
+<project name="create-release-with-actions" default="dist" basedir=".">
+    <property name="build" location="build" />
+    <property name="dist" location="dist" />
+
+    <target name="build">
+        <copy file="README.md" todir="${build}" />
+    </target>
+    <target name="dist" depends="build">
+        <zip destfile="${dist}/release.zip" basedir="${build}" includes="*" />
+    </target>
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+</project>
