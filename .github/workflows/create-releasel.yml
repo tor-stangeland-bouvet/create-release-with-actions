@@ -12,7 +12,6 @@ on:
         description: 'Release title'
         required: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,3 +24,21 @@ jobs:
           java-version: 1.8
       - name: Build using Ant
         run: ant dist
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          release_name: ${{ github.event.inputs.title }}
+          draft: true
+      - name: Upload assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/release.zip
+          asset_name: release-${{ github.event.inputs.tag }}.zip
+          asset_content_type: application/zip
