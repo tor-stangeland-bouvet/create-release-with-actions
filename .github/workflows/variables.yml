@@ -23,5 +23,6 @@ jobs:
       # Conditional set variable
       - name: Condtional
         run: |
+          echo $GITHUB_ENV
           [[ ("${{ github.event.inputs.message }}" != "")]] && echo MSG="[SECOND MESSAGE] ${{ github.event.inputs.message }}" >> $GITHUB_ENV 
           echo $MSG
