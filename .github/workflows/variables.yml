@@ -17,8 +17,8 @@ jobs:
     steps:
       # Conditional set variable
       - name: Setup variables
-        if: "${{ github.event.inputs.other_message }}"
-        run: echo MSG="[SECOND MESSAGE] ${{ github.event.inputs.other_message }}" >> $GITHUB_ENV 
+        if: ${{ github.event.inputs.other_message }}
+        run: echo MSG="[SECOND MESSAGE] ${{ github.event.inputs.other_message }}" >> $GITHUB_ENV
 
       # Set environement for step
       - name: Simple env usage
@@ -26,5 +26,4 @@ jobs:
         env:
           MESSAGE: "[LOG MESSAGE] ${{ github.event.inputs.message }}"
       - name: Second message
-        if: ${{ env.MSG != '' }}
         run: echo $MSG
