@@ -15,14 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Conditional set variable
+      - name: Setup variables
+        run: |
+          [[ ("${{ github.event.inputs.message }}" != "")]] && echo MSG="[SECOND MESSAGE] ${{ github.event.inputs.message }}" >> $GITHUB_ENV 
+
       # Set environement for step
       - name: Simple env usage
         run: echo $MESSAGE
         env:
           MESSAGE: "[LOG MESSAGE] ${{ github.event.inputs.message }}"
-      # Conditional set variable
-      - name: Condtional
-        run: |
-          echo $GITHUB_ENV
-          [[ ("${{ github.event.inputs.message }}" != "")]] && echo MSG="[SECOND MESSAGE] ${{ github.event.inputs.message }}" >> $GITHUB_ENV 
+      - name: Second message
+        if: ${{ env.MSG != '' }}
           echo $MSG
