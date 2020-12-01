@@ -27,4 +27,4 @@ jobs:
           MESSAGE: "[LOG MESSAGE] ${{ github.event.inputs.message }}"
       - name: Second message
         if: ${{ env.MSG != '' }}
-          echo $MSG
+        run: echo $MSG
